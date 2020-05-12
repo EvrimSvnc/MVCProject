@@ -1,0 +1,21 @@
+﻿
+#NewBlogAdd {
+    background-color: #449d44 !important;
+    border-radius: 2px;
+}
+
+    #NewBlogAdd:hover {
+        background-color: #449d44 !important;
+    }
+
+.NewBlogAdd.active, .NewBlogAdd:active, .open > .dropdown-toggle.NewBlogAdd {
+    color: #fff;
+    background-color: #449d44;
+    border-color: #398439;
+}
+.BlogTitle{
+    padding-top:2%!important;
+}
+.BlogDescription{
+    padding-top:2%!important;
+}

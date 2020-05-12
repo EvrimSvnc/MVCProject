@@ -1,0 +1,11 @@
+﻿.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    margin-left: 20%;
+    background-color: #e6e6e6;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+.invalid-form-element-color {
+    border: 2px solid red !important;
+}

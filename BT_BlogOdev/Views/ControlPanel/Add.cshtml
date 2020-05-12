@@ -1,0 +1,91 @@
+﻿
+@{
+    ViewBag.Title = "Blog Ekle";
+    List<BT_BlogOdev.Models.BlogType> typeList = ViewBag.BlogTypeList;
+}
+@model BT_BlogOdev.Models.Blog
+
+<link href="~/Content/css/BlogControl.css" rel="stylesheet">
+<script src="~/Content/js/ValidationForm.js"></script>
+<div class="panel">
+    <div class="panel-heading">
+
+    </div>
+    <div class="panel-body">
+        <div class="col-md-12">
+            <div class="inner_content text-center">
+                <div class="contact_form">
+                    <div class="alert" role="alert" style="display:none;" id="CallbackMessageFail">
+                        <div class="alert-icon">
+                            <i class="fa fa-exclamation-triangle" style="color:red" aria-hidden="true"></i>
+                        </div>
+                        <div class="alert-message">
+
+                        </div>
+                    </div>
+                    <form class="form-horizontal" method="post" onsubmit="return ValidateBlogForm()" action="/ControlPanel/Add/@if (Model != null) {@Model.ID } " enctype="multipart/form-data" name="BlogForm">
+                        <div class="alert alert-outline-danger alert-icon-bg alert-dismissable" role="alert" style="display:none;margin:0;" id="CallbackMessageFail">
+                            <div class="alert-icon">
+                                <i class="zmdi zmdi-close-circle-o"></i>
+                            </div>
+                            <div class="alert-message"></div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label text-right col-md-3">
+                                Resim
+                            </label>
+                            <div class="col-md-9">
+                                <input type="file" name="ImageURL" id="ImageURL" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label text-right col-md-3">
+                                Başlık
+                            </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.BlogTitle, new { @class = "form-control", autocomplete = "off", @placeholder = "Başlık yazınız", @id = "BlogTitle" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label text-right col-md-3">
+                                Açıklama
+                            </label>
+                            <div class="col-md-9">
+                                @Html.TextAreaFor(x => x.BlogDescription, new { @class = "form-control", rows = "8", autocomplete = "off", @id = "BlogDescription" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label text-right col-md-3">
+                                Kategori
+                            </label>
+                            <div class="col-md-9">
+                                <select class="form-control" id="BlogType" name="BlogType">
+                                    <option value='0' selected disabled>Seçiniz</option>
+
+                                    @foreach (var item in ViewBag.BlogTypeList)
+                                    {
+                                        <option value="@item.ID" @if (Model != null && Model.BlogType == item.ID) { @Html.Raw("selected") }> @item.TypeName</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label text-right col-md-3">
+                                Yazar
+                            </label>
+                            <div class="col-md-9">
+                                @Html.TextBoxFor(x => x.BlogWriter, new { @class = "form-control", autocomplete = "off" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input name="" type="submit" class="btn active_btn pull-right" value="Kaydet" style="width:200px;">
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+

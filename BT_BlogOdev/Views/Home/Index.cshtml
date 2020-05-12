@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    List<BT_BlogOdev.Models.BlogType> blogTypeList = ViewBag.BlogType;
+}
+
+@model IEnumerable<BT_BlogOdev.Models.Blog>
+
+<!--post slider-->
+<section id="slider_post_m">
+    <div class="container">
+        <div class="row">
+            <div id="slider-post" class="owl-carousel">
+                @foreach (var item in Model)
+                {
+                    <div class="slider-post-item">
+                        <div class="slider-post-m">
+                            <a href="/Blog/Detail/@item.ID">
+                                <img src="/upload/@item.ImageURL" alt="image">
+                            </a>
+                            <div class="slide_overlay">
+                                <div class="slide_info">
+                                    <div class="slide_cats">
+                                        @{
+                                            string typeName = blogTypeList.FirstOrDefault(x => x.ID == item.BlogType).TypeName;
+                                        }
+                                        <a rel="category tag" href="/Blog/Detail/@item.ID">
+                                            @typeName
+                                        </a>
+                                    </div>
+                                    <h3 class="slide_title"><a href="/Blog/Detail/@item.ID">@item.BlogTitle</a></h3>
+                                    <div class="slide_date">@item.BlogWriter - @item.Datetime.Value.ToShortDateString()</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</section>
+<!--psot slider end-->

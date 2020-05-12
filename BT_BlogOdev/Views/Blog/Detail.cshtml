@@ -1,0 +1,114 @@
+﻿
+@{
+    ViewBag.Title = "Detail";
+    List<BT_BlogOdev.Models.Comment> commentList = ViewBag.CommentList;
+
+}
+<link href="~/Content/css/BlogControl.css" rel="stylesheet">
+<script src="~/Content/js/ValidationForm.js"></script>
+
+@model BT_BlogOdev.Models.Blog
+<section class="articles_psot_wrap single-post">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <article class="standard-post-format">
+                    <div class="post_header entry-header">
+                        <h3 class="post_title entry-title" style="text-align:center;">@Model.BlogTitle</h3>
+                    </div>
+                    <div class="post_featured_image">
+                        <center>
+
+                            <img src="/upload/@Model.ImageURL" alt="post-image">
+                        </center>
+                    </div>
+                    <div class="post_meta_elements ">
+                        <div class="row">
+                            <div class="col-md-8 col-sm-8">
+                                <span class="post_by"> Yazar : <a href="#">@Model.BlogWriter</a></span>
+                                <span class="post_date"> @Model.Datetime.Value.ToShortDateString()</span>
+                            </div>
+                            <div class="col-md-4 col-sm-4">
+                                <span class="post_counters_comments"><a href="#"><span class="post_counters_number">@commentList.Count</span> Yorum</a></span>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="post_content entry-content">
+                        @Html.Raw(Model.BlogDescription)
+                    </div>
+                    <div class="all_comments">
+                        <h3>Yorum (@commentList.Count)</h3>
+                        @foreach (var item in commentList)
+                        {
+
+                            <ul>
+                                <li class="comment_list">
+                                    @*<div class="comment_author_avatar">
+                                            <img src="images/image1.jpg" alt="image">
+                                        </div>*@
+
+                                    <div class="comment_content">
+                                        <div class="comment_info">
+                                            <h6 class="comment_author">@item.Name<a href="#"></a></h6>
+                                            <span class="pull-right" style="padding-right:10px;">
+                                                <span class="comment_date">@item.DateTime.Value.ToShortDateString()</span>
+                                                <span class="comment_time">@item.DateTime.Value.ToShortTimeString()</span>
+                                            </span>
+                                        </div>
+                                        <div class="comment_text_wrap">
+                                            <div class="comment_text">
+                                                @Html.Raw(item.Message)
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+
+                        }
+                    </div>
+                    <!---comment-form--->
+                    <div class="psot_comment">
+                        <h3>Yorum </h3>
+                        <div class="commentform">
+                            <div class="alert" role="alert" style="display:none;margin-left:0px;" id="CallbackMessageFail">
+                                <div class="alert-icon">
+                                    <i class="zmdi zmdi-close-circle-o"></i>
+                                </div>
+                                <div class="alert-message">
+
+                                </div>
+                            </div>
+                            <form class="form-horizontal" method="post" action="/Blog/CommentAdd/@if (Model != null) {@Model.ID } " enctype="multipart/form-data" onsubmit="return ValidateCommitForm()" name="CommitForm">
+
+                                <div class="form-group">
+                                    <textarea tabindex="4" rows="7" class="required" id="Message" placeholder="İçerik " name="Message"></textarea>
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="text" size="30" value="" placeholder="Ad Soyad" name="Name" id="Name">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="email" size="30" value="" placeholder="E-Posta" name="EMail" id="EMail">
+                                </div>
+
+                                <div class="form-group">
+                                    <input type="submit" value="Gönder" class="btn submit btn active_btn" id="submit" name="Submit">
+                                </div>
+
+
+                            </form>
+                        </div>
+                    </div>
+                    <!---/comment-form--->
+                </article>
+
+            </div>
+            <div class="col-md-2"></div>
+
+        </div>
+    </div>
+</section>
+

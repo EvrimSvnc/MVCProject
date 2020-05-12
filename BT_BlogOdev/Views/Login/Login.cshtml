@@ -1,0 +1,49 @@
+﻿@model UserAuthorize
+@{
+    ViewBag.Title = "Login Ol";
+}
+<link href="~/Content/css/BlogControl.css" rel="stylesheet">
+<script src="~/Content/js/ValidationForm.js"></script>
+<section class="contact-section">
+    <div class="container">
+        <div class="row no-gutters align-items-center">
+            <div class="col-md-3 col-lg-3"></div>
+            <div class="col-md-6 col-lg-6">
+                @if (HttpContext.Current.Session["sessionName"] != null)
+                {
+                    <div class="alert" role="alert" style="margin-left:0px;">
+                        <div class="alert-message">
+                            <center>
+                                <span style="color:red">  <i class="fa fa-bell" aria-hidden="true"></i> Daha önce giriş yaptınız ! </span>
+                            </center>
+                        </div>
+                    </div>
+
+                }
+                <form class="contact-form" method="post" action="/Login/Login" onsubmit="return ValidateLoginForm()" name="LoginForm">
+                    <div class="alert" role="alert" style="display:none;margin-left:0px;" id="CallbackMessageFail">
+                        <div class="alert-icon">
+                            <i class="zmdi zmdi-close-circle-o"></i>
+                        </div>
+                        <div class="alert-message">
+
+                        </div>
+                    </div>
+                    <h3>GİRİŞ İŞLEMİ</h3>
+                    <p>Kullanıcı maili: admin <br /> Şifre: 123</p>
+
+                    @Html.TextBoxFor(x => x.EMail, new { @class = "form-control", autocomplete = "off", @placeholder = "EMail yazınız", @id = "EMail" })
+
+                    @Html.TextBoxFor(x => x.Password, new { @class = "form-control", autocomplete = "off", @placeholder = "Şifre yazınız", @id = "Password" })
+
+                    <input name="" type="submit" class="btn active_btn pull-right" value="Giriş" style="width:200px;">
+                </form>
+
+            </div>
+            <div class="col-md-3 col-lg-3"></div>
+        </div>
+    </div>
+</section>
+
+
+

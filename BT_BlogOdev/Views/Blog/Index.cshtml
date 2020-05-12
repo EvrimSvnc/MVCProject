@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<BT_BlogOdev.Models.BlogType> blogTypeList = ViewBag.BlogType;
+}
+@model IEnumerable<BT_BlogOdev.Models.Blog>
+
+
+@foreach (var item in Model)
+{
+    <div class="col-md-6" style="padding-top:20px;">
+        <div class="card border-0">
+            <a href="/Blog/Detail/@item.ID">
+                <img src="/upload/@item.ImageURL" class="card-img-top" alt="">
+            </a>
+            <div class="card-body px-0">
+                <ul class="category-tag-list">
+                    <li class="category-tag-name">
+                        <a href="/Blog/Detail/@item.ID">
+                        @blogTypeList.FirstOrDefault(x=>x.ID == item.BlogType).TypeName
+                        </a>
+                    </li>
+                    <li class="pull-right">
+                            <span>@item.Datetime.Value.ToShortDateString()</span>
+                    </li>
+                </ul>
+
+                <h5 class="card-title title-font">
+                    <a href="/Blog/Detail/@item.ID">
+                        @if (item.BlogTitle.Length > 45)
+                        {
+                        <span> @item.BlogTitle.Substring(0, 42) ... </span>
+                        }
+                        else
+                        {
+                            @item.BlogTitle
+                        }
+                    </a>
+                </h5>
+                <p class="card-text pb-4">
+                    @if (item.BlogDescription.Length > 420)
+                    {
+                    <span>@item.BlogDescription.Substring(0,420)...</span>
+                    }
+                    else
+                    {
+                        @item.BlogDescription
+                    }
+                </p>
+                <div class="author-date">
+                    <a class="author" href="#">
+                        <img src="assets/images/person1.jpg" alt="" class="rounded-circle">
+                        <span class="writer-name-small">
+                            Yazı Sahibi : @item.BlogWriter
+                        </span>
+                    </a>
+                    <a href="/Blog/Detail/@item.ID" class="btn btn-info pull-right">Detay</a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}
+

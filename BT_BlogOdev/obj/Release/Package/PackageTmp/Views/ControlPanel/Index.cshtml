@@ -1,0 +1,97 @@
+﻿
+@{
+    ViewBag.Title = "Blog Kontrol Panel";
+    int i = 1;
+}
+
+<link href="~/Content/css/BlogList.css" rel="stylesheet">
+@model IEnumerable<BT_BlogOdev.Models.Blog>
+<script>
+    function AddBlog() {
+        window.location.href = "/ControlPanel/Add"
+    }
+    var ConfirmDelete = function (EmployeeId) {
+        $("#hiddenBlogNewId").val(EmployeeId);
+        $("#myModal").modal('show');
+    }
+
+    var DeleteBlogNew = function () {
+        var blgId = $("#hiddenBlogNewId").val();
+
+        $.ajax({
+
+            type: "POST",
+            url: "/ControlPanel/Delete",
+            data: { ID: blgId },
+            success: function (result) {
+                $("#myModal").modal("hide");
+                $("#row_" + blgId).remove();
+                
+            }
+
+        })
+
+    }
+</script>
+<div class="panel">
+    <div class="panel-heading">
+        <button type="button" onclick="AddBlog()" id="NewBlogAdd" class="btn btn-success">Yeni Blog Yazısı Ekle</button>
+    </div>
+    <div class="panel-body">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th width="2%">#</th>
+                    <th width="15%">Görsel</th>
+                    <th width="25%">Başlık</th>
+                    <th width="38%">Açıklama</th>
+                    <th width="20%"></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr id="row_@item.ID">
+                        <td>@i</td>
+                        <td><img src="/upload/@item.ImageURL" style="width:50%" /></td>
+                        <td class="BlogTitle">@item.BlogTitle</td>
+                        <td class="BlogDescription">@if (item.BlogDescription.Length > 50 ) { <span>@item.BlogDescription.Substring(0, 50) ...</span>} </td>
+                        <td>
+                            <a href="/ControlPanel/Add/@item.ID" class="btn btn-info">Düzenle</a>
+                            <a onclick="ConfirmDelete(@item.ID)" class="btn btn-danger">SİL</a>
+                        </td>
+                    </tr>
+                    i++;
+                }
+
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<div class="modal fade" id="myModal" style="margin-top:10%">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <a href="#" class="close" data-dismiss="modal">&times;</a>
+                <center> <span style="color:red">Silinecek</span> </center>
+
+            </div>
+            <div class="modal-body">
+                <center>Seçtiğiniz blog yazısı kaldırılacaktır. </center>
+            </div>
+            <div class="modal-footer">
+                <center>
+                    <a href="#" class="btn btn-warning" data-dismiss="modal">Vazgeç</a>
+                    <a href="#" class="btn btn-danger" onclick="DeleteBlogNew()">SİL</a>
+                </center>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+@*hidden field for storing current employeeId*@
+<input type="hidden" id="hiddenBlogNewId" />
+
